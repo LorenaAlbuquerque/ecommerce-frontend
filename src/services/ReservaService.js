@@ -8,7 +8,7 @@ export const ReservaService = {
   criarReserva: async ({ produtoId, usuarioId }) => {
     const response = await api.post('/reservas', { produtoId, usuarioId });
     return response.data;
-  },
+  }, 
   consultarReserva: async (reservaId) => {
     const response = await api.get(`/reservas/${reservaId}`);
     return response.data;

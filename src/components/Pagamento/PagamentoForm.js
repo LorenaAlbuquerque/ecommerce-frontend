@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PagamentoService } from '../../services/PagamentoService';
+import { ReservaService } from '../../services/ReservaService';
 
 const PagamentoForm = () => {
   const [reservaId, setReservaId] = useState('');
@@ -7,11 +8,20 @@ const PagamentoForm = () => {
   const [formaPagamento, setFormaPagamento] = useState('');
   const [message, setMessage] = useState('');
 
+  const handleBuscarValor = async () => {
+    try {
+      const reserva = await ReservaService.consultarReserva(reservaId);
+      setValor(reserva.produto.preco); // Preenche o valor automaticamente
+    } catch (error) {
+      setMessage('Erro ao buscar valor: ' + error.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await PagamentoService.criarPagamento({ reservaId, valor, formaPagamento });
-      setMessage(`Pagamento criado com sucesso! ID: ${response.id}`);
+      await PagamentoService.criarPagamento({ reservaId, valor, formaPagamento });
+      setMessage('Pagamento realizado com sucesso!');
     } catch (error) {
       setMessage('Erro ao criar pagamento: ' + error.message);
     }
@@ -29,6 +39,9 @@ const PagamentoForm = () => {
           onChange={(e) => setReservaId(e.target.value)}
           required
         />
+        <button type="button" className="btn btn-primary mt-2" onClick={handleBuscarValor}>
+          Buscar Valor
+        </button>
       </div>
       <div className="mb-3">
         <label className="form-label">Valor:</label>
@@ -36,8 +49,7 @@ const PagamentoForm = () => {
           type="number"
           className="form-control"
           value={valor}
-          onChange={(e) => setValor(e.target.value)}
-          required
+          readOnly
         />
       </div>
       <div className="mb-3">

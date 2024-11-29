@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../services/UserService';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await UserService.login({ email, senha });
+
+      localStorage.setItem('usuarioLogado', JSON.stringify(response));
+
       setMessage(`Login bem-sucedido! Bem-vindo, ${response.nome}`);
-      // Aqui você pode salvar o token do usuário no localStorage ou em um contexto
+      navigate('/');
     } catch (error) {
       setMessage('Erro ao fazer login: ' + error.message);
     }

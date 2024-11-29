@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado')); // Verifica se o usuário está logado
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuarioLogado'); // Remove os dados do usuário
+    navigate('/'); // Redireciona para a Home
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div className="container-fluid">
@@ -28,15 +36,22 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/pagamentos">Pagamento</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/cadastro">Cadastro</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/perfil">Perfil</Link>
-            </li>
+            {usuarioLogado ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/perfil">Perfil</Link>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Login</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

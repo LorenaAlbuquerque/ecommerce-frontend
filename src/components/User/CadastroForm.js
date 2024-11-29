@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../services/UserService';
 
 const CadastroForm = () => {
@@ -10,6 +11,7 @@ const CadastroForm = () => {
     telefone: '',
   });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +21,9 @@ const CadastroForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await UserService.cadastrarUsuario(usuario);
-      setMessage(`Usuário cadastrado com sucesso! ID: ${response.id}`);
+      await UserService.cadastrarUsuario(usuario);
+      setMessage('Cadastro realizado com sucesso!');
+      setTimeout(() => navigate('/login'), 2000); 
     } catch (error) {
       setMessage('Erro ao cadastrar usuário: ' + error.message);
     }
@@ -28,7 +31,7 @@ const CadastroForm = () => {
 
   return (
     <div className="container mt-5 p-4 border rounded bg-light">
-      <h2 className="mb-4 text-center">Cadastro de Usuário</h2>
+      <h2 className="text-center mb-4">Cadastro de Usuário</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Nome:</label>
@@ -88,8 +91,8 @@ const CadastroForm = () => {
         <button type="submit" className="btn btn-primary w-100 mb-3">
           Cadastrar
         </button>
+        {message && <p className="mt-3 text-center">{message}</p>}
       </form>
-      {message && <p className="mt-3 text-center">{message}</p>}
     </div>
   );
 };

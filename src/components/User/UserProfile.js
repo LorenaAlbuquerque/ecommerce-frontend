@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { UserService } from '../../services/UserService';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const fetchUsuario = async () => {
-      try {
-        const response = await UserService.getPerfil();
-        setUsuario(response);
-      } catch (error) {
-        setMessage('Erro ao buscar perfil do usuário: ' + error.message);
-      }
-    };
-    fetchUsuario();
-  }, []);
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    if (!usuarioLogado) {
+      navigate('/login'); 
+    } else {
+      setUsuario(usuarioLogado);
+    }
+  }, [navigate]);
 
-  if (!usuario) return <p className="text-center mt-3">{message || 'Carregando perfil...'}</p>;
+  if (!usuario) return null;
 
   return (
     <div className="container mt-5 p-4 border rounded bg-light">
@@ -36,7 +33,6 @@ const UserProfile = () => {
           <strong>Telefone:</strong> {usuario.telefone}
         </div>
       </div>
-      {message && <p className="mt-3 text-center text-danger">{message}</p>}
     </div>
   );
 };

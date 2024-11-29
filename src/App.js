@@ -7,6 +7,7 @@ import PagamentoPage from './pages/PagamentoPage';
 import LoginPage from './pages/LoginPage';
 import CadastroPage from './pages/CadastroPage';
 import UserProfilePage from './pages/UserProfilePage';
+import ProdutoCadastroPage from './pages/ProdutoCadastroPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cadastro" element={<CadastroPage />} />
           <Route path="/perfil" element={<UserProfilePage />} />
+          <Route path="/produtos/cadastro" element={<ProdutoCadastroPage />} />
         </Routes>
       </div>
     </Router>

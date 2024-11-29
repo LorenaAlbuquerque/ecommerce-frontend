@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from '../components/User/LoginForm';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   return (
@@ -7,6 +8,9 @@ const LoginPage = () => {
       <div className="row justify-content-center">
         <div className="col-md-4">
           <LoginForm />
+          <p className="text-center mt-3">
+            Não tem uma conta? <Link to="/cadastro">Cadastre-se aqui</Link>
+          </p>
         </div>
       </div>
     </div>
