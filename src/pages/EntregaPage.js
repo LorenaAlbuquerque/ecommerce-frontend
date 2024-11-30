@@ -28,7 +28,6 @@ const EntregaPage = () => {
       <div className="list-group">
         {entregas.map((entrega) => (
           <div key={entrega.id} className="list-group-item">
-            <strong>ID:</strong> {entrega.id} <br />
             <strong>Reserva:</strong> {entrega.reservaId} <br />
             <strong>Endereço:</strong> {entrega.enderecoEntrega} <br />
             <strong>Status:</strong> {entrega.statusEntrega}
