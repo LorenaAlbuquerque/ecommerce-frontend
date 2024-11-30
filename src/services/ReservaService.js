@@ -9,6 +9,10 @@ export const ReservaService = {
     const response = await api.post('/reservas', { produtoId, usuarioId });
     return response.data;
   }, 
+  cancelarReserva: async (reservaId) => {
+    const response = await api.put(`/reservas/${reservaId}/cancelar`); 
+    return response.data;
+  },    
   consultarReserva: async (reservaId) => {
     const response = await api.get(`/reservas/${reservaId}`);
     return response.data;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PagamentoService } from '../../services/PagamentoService';
 import { ReservaService } from '../../services/ReservaService';
 
-const PagamentoForm = () => {
+const PagamentoForm = ({ onPagamentoFinalizado }) => {
   const [reservaId, setReservaId] = useState('');
   const [valor, setValor] = useState('');
   const [formaPagamento, setFormaPagamento] = useState('');
@@ -11,7 +11,7 @@ const PagamentoForm = () => {
   const handleBuscarValor = async () => {
     try {
       const reserva = await ReservaService.consultarReserva(reservaId);
-      setValor(reserva.produto.preco); // Preenche o valor automaticamente
+      setValor(reserva.produto.preco); 
     } catch (error) {
       setMessage('Erro ao buscar valor: ' + error.message);
     }
@@ -22,14 +22,15 @@ const PagamentoForm = () => {
     try {
       await PagamentoService.criarPagamento({ reservaId, valor, formaPagamento });
       setMessage('Pagamento realizado com sucesso!');
+      onPagamentoFinalizado(reservaId); 
     } catch (error) {
-      setMessage('Erro ao criar pagamento: ' + error.message);
+      setMessage('Erro ao realizar pagamento: ' + error.message);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="container mt-4 p-4 border rounded bg-light">
-      <h2 className="mb-4 text-center">Criar Pagamento</h2>
+      <h2 className="mb-4 text-center">Pagamento</h2>
       <div className="mb-3">
         <label className="form-label">Reserva ID:</label>
         <input
@@ -68,7 +69,7 @@ const PagamentoForm = () => {
         </select>
       </div>
       <button type="submit" className="btn btn-primary w-100">
-        Criar Pagamento
+        Realizar Pagamento
       </button>
       {message && <p className="mt-3 text-center">{message}</p>}
     </form>

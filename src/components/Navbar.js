@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado')); // Verifica se o usuário está logado
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
   const handleLogout = () => {
-    localStorage.removeItem('usuarioLogado'); // Remove os dados do usuário
-    navigate('/'); // Redireciona para a Home
+    localStorage.removeItem('usuarioLogado');
+    navigate('/');
   };
 
   return (
@@ -35,6 +35,9 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/pagamentos">Pagamento</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/entregas">Entrega</Link> 
             </li>
             {usuarioLogado ? (
               <>

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { EntregaService } from '../../services/EntregaService';
 
-const StatusEntregaForm = () => {
-  const [entregaId, setEntregaId] = useState('');
-  const [novoStatus, setNovoStatus] = useState('');
+const StatusEntregaForm = ({ entrega, onAtualizarEntrega }) => {
+  const [novoStatus, setNovoStatus] = useState(entrega.statusEntrega);
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await EntregaService.atualizarStatusEntrega(entregaId, novoStatus);
-      setMessage(`Status atualizado! Status atual: ${response.statusEntrega}`);
+      const entregaAtualizada = await EntregaService.atualizarStatusEntrega(entrega.id, novoStatus);
+      setMessage('Status atualizado com sucesso!');
+      onAtualizarEntrega(entregaAtualizada); 
     } catch (error) {
       setMessage('Erro ao atualizar status: ' + error.message);
     }
@@ -19,16 +19,7 @@ const StatusEntregaForm = () => {
   return (
     <form onSubmit={handleSubmit} className="container mt-4 p-4 border rounded bg-light">
       <h2 className="mb-4 text-center">Atualizar Status da Entrega</h2>
-      <div className="mb-3">
-        <label className="form-label">Entrega ID:</label>
-        <input
-          type="number"
-          className="form-control"
-          value={entregaId}
-          onChange={(e) => setEntregaId(e.target.value)}
-          required
-        />
-      </div>
+      <p><strong>ID da Entrega:</strong> {entrega.id}</p>
       <div className="mb-3">
         <label className="form-label">Novo Status:</label>
         <select
@@ -44,7 +35,7 @@ const StatusEntregaForm = () => {
         </select>
       </div>
       <button type="submit" className="btn btn-primary w-100">
-        Atualizar Status
+        Atualizar
       </button>
       {message && <p className="mt-3 text-center">{message}</p>}
     </form>

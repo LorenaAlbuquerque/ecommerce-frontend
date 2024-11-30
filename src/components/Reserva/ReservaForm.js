@@ -18,7 +18,7 @@ const ReservaForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="container mt-4 p-4 border rounded bg-light">
-      <h2 className="mb-4 text-center">Criar Reserva</h2>
+      <h2 className="mb-4 text-center">Fazer Reserva</h2>
       
       <div className="mb-3">
         <label className="form-label">Produto ID:</label>
@@ -43,7 +43,7 @@ const ReservaForm = () => {
       </div>
       
       <button type="submit" className="btn btn-primary w-100">
-        Criar Reserva
+        Fazer Reserva
       </button>
       
       {message && <p className="mt-3 text-center">{message}</p>}

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import CadastroPage from './pages/CadastroPage';
 import UserProfilePage from './pages/UserProfilePage';
 import ProdutoCadastroPage from './pages/ProdutoCadastroPage';
+import EntregaPage from './pages/EntregaPage';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/cadastro" element={<CadastroPage />} />
           <Route path="/perfil" element={<UserProfilePage />} />
           <Route path="/produtos/cadastro" element={<ProdutoCadastroPage />} />
+          <Route path="/entregas" element={<EntregaPage />} />
         </Routes>
       </div>
     </Router>
