@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ReservaDetails = ({ reserva, onClose }) => {
-  // Verificar se os dados estão definidos
   if (!reserva || !reserva.produto) {
     return (
       <div className="container mt-4 p-4 border rounded bg-light">
